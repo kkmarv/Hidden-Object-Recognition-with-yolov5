@@ -1,7 +1,7 @@
 # Hidden Object dataset by Marvin (5023721), Konrad () and Lucas ()
 
 # Paths
-path: ../datasets/hidden_object_banana
+path: ../datasets/
 train: ./train/images
 val: ./valid/images
 test: ./test/images
@@ -9,10 +9,3 @@ test: ./test/images
 # Classes
 nc: 1  # number of classes
 names: ['banana']  # class names
-
-# uses confidential key - DO NOT SHARE!
-download: |
-  from roboflow import Roboflow
-  rf = Roboflow(api_key="ayiTP8hWf5tQo2mZgvXK")
-  project = rf.workspace("ki").project("wimmelbild-bananen")
-  dataset = project.version(1).download("yolov5", location='./datasets/hidden_object_banana')

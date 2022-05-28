@@ -3,7 +3,7 @@
 scriptDir=$(pwd)
 datasetsDir=./datasets
 
-# get datasets
+# get datasets - contains confidential keys DO NOT SHARE!
 curl -L "https://app.roboflow.com/ds/3JqUkFazKy?key=gO8znJvhOO" > \
 $datasetsDir/roboflow.zip; unzip $datasetsDir/roboflow.zip; rm $datasetsDir/roboflow.zip
 
