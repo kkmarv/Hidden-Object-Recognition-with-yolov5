@@ -1,7 +1,7 @@
 # Hidden Object dataset by Marvin (5023721), Konrad () and Lucas ()
 
 # Paths
-path: ../datasets/
+path: ../dataset/
 train: ./train/images
 val: ./valid/images
 test: ./test/images
