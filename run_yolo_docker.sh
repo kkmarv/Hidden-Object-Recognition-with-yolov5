@@ -5,15 +5,15 @@ datasetsDir=./datasets
 
 # get datasets - contains confidential keys DO NOT SHARE!
 curl -L "https://app.roboflow.com/ds/3JqUkFazKy?key=gO8znJvhOO" > \
-$datasetsDir/roboflow.zip; unzip $datasetsDir/roboflow.zip; rm $datasetsDir/roboflow.zip
+roboflow.zip; unzip -u -o roboflow.zip -d $datasetsDir; rm roboflow.zip
 
 curl -L "https://app.roboflow.com/ds/t9mXLVwSTE?key=pbKva5v9LR" > \
-$datasetsDir/roboflow.zip; unzip $datasetsDir/roboflow.zip; rm $datasetsDir/roboflow.zip
+roboflow.zip; unzip -u -o roboflow.zip -d $datasetsDir; rm roboflow.zip
 
 curl -L "https://app.roboflow.com/ds/EzlBpUrlE0?key=hufaTQ7eg6" > \
-$datasetsDir/roboflow.zip; unzip $datasetsDir/roboflow.zip; rm $datasetsDir/roboflow.zip
+roboflow.zip; unzip -u -o roboflow.zip -d $datasetsDir; rm roboflow.zip
 
-# run training inside docker
+# train in yolov5 docker
 sudo docker run --ipc=host -it --gpus all \
 -v "$scriptDir"/datasets:/usr/src/datasets \
 -v "$scriptDir"/runs:/usr/src/app/runs ultralytics/yolov5:latest \
