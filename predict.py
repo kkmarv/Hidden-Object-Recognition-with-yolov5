@@ -15,6 +15,18 @@ def convert_to_haenig(results_df: DataFrame) -> DataFrame:
         columns={'class': 'Object', 'xcenter': 'x', 'ycenter': 'y', 'width': 'w', 'height': 'h'},
         inplace=True
     )
+    results_df.replace({
+        'Object': {
+            0: 2,  # Bagger -> 2
+            1: 4,  # Banane -> 4
+            2: 5,  # Brokkoli -> 5
+            4: 9,  # Fussball -> 9
+            5: 6,  # Getraenkedose ->  6
+            6: 7,  # Leuchtturm -> 7
+            7: 10,  # W20 -> 10
+            9: 1  # Yoda -> 1
+        }
+    }, inplace=True)
     return results_df[['Object', 'x', 'y', 'w', 'h']]
 
 
@@ -34,8 +46,12 @@ def main() -> None:
 
     # save resulting images and csv files
     results.save(save_dir=model_output_path)
+
+    digits = len(str(len(results)))
     for idx, result_df in enumerate(results.xywhn):
-        convert_to_haenig(result_df).to_csv(f'{model_output_path}/{idx}.csv', index=False)
+        convert_to_haenig(result_df).to_csv(
+            f'{model_output_path}/image{str(idx).zfill(digits)}.csv', index=False
+        )
 
 
 if __name__ == '__main__':

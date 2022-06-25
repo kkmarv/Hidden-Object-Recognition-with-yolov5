@@ -1,0 +1,11 @@
+# Hidden Object dataset by Marvin (5023721), Konrad () and Lucas (5014457)
+
+# Paths
+path: ../dataset/
+train: ./train/images
+val: ./valid/images
+test: ./test/images
+
+# Classes
+nc: 10
+names: ['Bagger', 'Banane', 'Brokkoli', 'Croissant', 'Fussball', 'Getraenkedose', 'Leuchtturm', 'W20', 'Waldo', 'Yoda']

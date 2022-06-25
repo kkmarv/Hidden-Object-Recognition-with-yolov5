@@ -1,6 +1,7 @@
 ### Project-specific ###
 
 yolov5/
+wimmelbild-generator/
 
 # train/inference instances
 *.jpg
