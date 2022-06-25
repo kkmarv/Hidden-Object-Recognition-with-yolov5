@@ -7,5 +7,16 @@ val: ./valid/images
 test: ./test/images
 
 # Classes
-nc: 1  # number of classes
-names: ['banana']  # class names
+nc: 10  # number of classes
+names: [ # class names
+  'Yoda',
+  'Bagger',
+  'Croissant',
+  'Banane',
+  'Brokkoli',
+  'Getraenkedose',
+  'Leuchtturm',
+  'Waldo',
+  'Fussball',
+  'W20'
+]
