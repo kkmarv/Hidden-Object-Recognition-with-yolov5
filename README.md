@@ -2,7 +2,7 @@
 
 ## Inference
 
-First, open a terminal inside the repos root directory. Then, run
+First, open a terminal inside the repos root directory, then run
 
 ```shell
 python src/inference/predict.py input_path output_path
