@@ -44,9 +44,10 @@ def main() -> None:
     # do inference
     results = model(images).pandas()  # or .show(), .save(), .crop(), .pandas(), etc
 
-    # save resulting images and csv files
+    # save resulting images
     results.save(save_dir=model_output_path)
 
+    # save resulting csv files
     digits = len(str(len(results)))
     for idx, result_df in enumerate(results.xywhn):
         convert_to_haenig(result_df).to_csv(

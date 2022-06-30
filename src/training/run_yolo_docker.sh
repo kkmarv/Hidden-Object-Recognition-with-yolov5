@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-script_dir=$(pwd)
-dataset_dir="$script_dir"/datasets
+root_dir=$(pwd)
+dataset_dir="$root_dir"/datasets
 train_cmd="python -m torch.distributed.run --nproc_per_node 2 train.py --img 640 --batch-size 64 --epochs 300 --data ../datasets/HiddenObject.yaml --weights yolov5s.pt --device 0,1"
 evolve_cmd="for i in 0 1; do nohup python train.py --img 640 --epochs 10 --data ../datasets/HiddenObject.yaml --weights yolov5s.pt --cache --evolve --device \$i > evolve_gpu_\$i.log & done"
 
@@ -34,10 +34,10 @@ download() {
 download "https://app.roboflow.com/ds/UccvP21HOz?key=fBv59FvVxz" complete
 
 printf 'Downloads finished.\n'
-printf 'Starting yolov5 docker container...\n'
+printf 'Starting yolov5 Docker container...\n'
 
 run yolov5 docker
 sudo docker run --ipc=host -it --gpus all \
   -v "$dataset_dir":/usr/src/datasets \
-  -v "$script_dir"/runs:/usr/src/app/runs ultralytics/yolov5:latest \
+  -v "$root_dir"/runs:/usr/src/app/runs ultralytics/yolov5:latest \
   bash -c "wandb disabled && $train_cmd"
