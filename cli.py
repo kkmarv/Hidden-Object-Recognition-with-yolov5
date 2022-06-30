@@ -13,20 +13,14 @@ class ARGS:
 parser = argparse.ArgumentParser()
 
 # positional arguments
-parser.add_argument(
-    'input_path', type=str,
-    help='Path to model input. Can be either a single image or a directory. Valid image types are: .png, .jpeg, .jpg')
-parser.add_argument(
-    'output_path', type=str,
-    help='Path to model output dir. Will be created along the way if it not exists.')
+parser.add_argument('input_path', type=str,
+                    help='Path to model input. Can be either a single image or a directory. Valid image types are: .png, .jpeg, .jpg')
+parser.add_argument('output_path', type=str,
+                    help='Path to model output dir. Will be created along the way if it not exists.')
 
 # optional arguments
-parser.add_argument(
-    '--yolov5_path', type=str,
-    help='Path to yolov5 root dir.')
-parser.add_argument(
-    '--weights_path', type=str,
-    help='Path to custom yolov5 weights (.pt).')
+parser.add_argument('--yolov5_path', type=str, help='Path to yolov5 root dir.')
+parser.add_argument('--weights_path', type=str, help='Path to custom yolov5 weights (.pt).')
 
 parser.set_defaults(
     yolov5_path='yolov5/',
