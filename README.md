@@ -5,7 +5,7 @@
 First, open a terminal inside the repos root directory. Then, run
 
 ```shell
-python predict.py input_path output_path
+python src/inference/predict.py input_path output_path
 ```
 
 With
