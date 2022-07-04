@@ -56,7 +56,7 @@ def main() -> None:
     for idx, result_df in enumerate(results.xywhn):
         image_name = os.path.basename(images[idx]).split('.')[0]
         convert_to_haenig(result_df).to_csv(
-            f'{model_input_path}/{image_name}.csv', index=False
+            f'{model_input_path}/{image_name}.{team_name}.csv', index=False
         )
 
 
@@ -67,5 +67,6 @@ if __name__ == '__main__':
     model_output_path = ARGS.output_path
     yolov5_path = ARGS.yolov5_path
     weights_path = ARGS.weights_path
+    team_name = ARGS.team_name
 
     main()
