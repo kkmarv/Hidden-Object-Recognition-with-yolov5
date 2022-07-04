@@ -53,10 +53,10 @@ def main() -> None:
     results.save(save_dir=model_output_path)
 
     # save resulting csv files
-    digits = len(str(len(results)))
     for idx, result_df in enumerate(results.xywhn):
+        image_name = os.path.basename(images[idx]).split('.')[0]
         convert_to_haenig(result_df).to_csv(
-            f'{model_output_path}/image{str(idx).zfill(digits)}.csv', index=False
+            f'{model_input_path}/{image_name}.csv', index=False
         )
 
 
