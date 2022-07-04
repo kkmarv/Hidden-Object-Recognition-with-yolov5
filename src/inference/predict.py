@@ -2,7 +2,7 @@ import os
 import torch
 
 # used for typing only
-from pandas import DataFrame
+from pandas.core.frame import DataFrame
 
 
 def is_valid_image_file(file_name: str) -> bool:
