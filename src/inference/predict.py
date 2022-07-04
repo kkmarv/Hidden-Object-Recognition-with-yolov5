@@ -50,7 +50,8 @@ def main() -> None:
     results = model(images).pandas()  # or .show(), .save(), .crop(), .pandas(), etc
 
     # save resulting images
-    results.save(save_dir=model_output_path)
+    if model_output_path:
+        results.save(save_dir=model_output_path)
 
     # save resulting csv files
     for idx, result_df in enumerate(results.xywhn):
