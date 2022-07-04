@@ -11,10 +11,14 @@ def is_valid_image_file(file_name: str) -> bool:
 
 def convert_to_haenig(results_df: DataFrame) -> DataFrame:
     """Yep. Converts to Hänig."""
+
+    # rename columns from yolov5 format to required format
     results_df.rename(
         columns={'class': 'Object', 'xcenter': 'x', 'ycenter': 'y', 'width': 'w', 'height': 'h'},
         inplace=True
     )
+
+    # reassign label IDs from alphabetical to required order
     results_df.replace({
         'Object': {
             0: 2,  # Bagger -> 2
@@ -27,6 +31,7 @@ def convert_to_haenig(results_df: DataFrame) -> DataFrame:
             9: 1  # Yoda -> 1
         }
     }, inplace=True)
+
     return results_df[['Object', 'x', 'y', 'w', 'h']]
 
 
