@@ -7,8 +7,18 @@
 
 ### Prerequisites
 
-It is expected that yolov5 is installed under the repos root dir.  
-If you'd like to install it elsewhere, see _Optional Arguments_ in the next section.
+It is expected that yolov5 is installed on the same level as the repos root dir (see illustration below).  
+If you'd like to install or already have it installed elsewhere, see _Optional Arguments_ in the next section.
+
+```
+├── wimmelbilder-mit-yolov5
+│   ├── datasets
+│   ├── model
+│   ├── src
+│   ...
+├── yolov5
+│   └── ...
+```
 
 ### Infer
 

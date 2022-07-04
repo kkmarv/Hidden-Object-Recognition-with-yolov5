@@ -23,7 +23,7 @@ parser.add_argument('--yolov5_path', type=str, help='Path to yolov5 root dir.')
 parser.add_argument('--weights_path', type=str, help='Path to custom yolov5 weights (.pt).')
 
 parser.set_defaults(
-    yolov5_path='./yolov5/',
+    yolov5_path='../yolov5/',
     weights_path='./model/best.pt'
 )
 
