@@ -42,8 +42,8 @@ With
 
 ### Results
 
-The Inference will produce a `.csv` file for each image inside the `input_path` containing labels similar to the yolov5
-format but with an additional `Object` parameter inserted up front.  
+The Inference will produce a `.csv` file for each image inside the `input_path` containing labels in yolov5 format. See
+below for a short description.  
 The file will be named after `image_name.Tieeeeeeem.csv`. For example, when inference is made on an image `x.png`, the
 resulting `.csv` file will be called `x.Tieeeeeeem.csv`.
 
@@ -51,7 +51,7 @@ resulting `.csv` file will be called `x.Tieeeeeeem.csv`.
 
 | Parameter  | Description                                                 |
 |------------|-------------------------------------------------------------|
-| **Object** | [Object ID](#object-ids)                                    |
+| **Object** | [**Object ID**](#object-ids)                                |
 | **x**      | Center x-position of the label. Normalized to image width.  |
 | **y**      | Center y-position of the label. Normalized to image height. |
 | **w**      | Normalized label width.                                     |
@@ -76,13 +76,69 @@ resulting `.csv` file will be called `x.Tieeeeeeem.csv`.
 
 ### Prerequisites
 
-For this workflow to function as intended, you'll have to have Docker, the NVIDIA Container Toolkit and Nvidia Drivers
-installed. Furthermore, you'll need a yolov5 Docker image.
+For this workflow to function as intended, you'll have to have Docker, the NVIDIA Container Toolkit, Nvidia Drivers
+installed and, you'll need a yolov5 Docker image.
 Instructions for all this can be found [**here**](https://github.com/ultralytics/yolov5/wiki/Docker-Quickstart).
+
+These steps will suffice to give you a working yolov5 container, but to fully use our Augmentation Pipeline, you'll need
+a modified version of yolo's Docker image, which needs some manual manipulation. If you'd like to, you can:
+
+<details><summary><b>Build the image yourself</b></summary>
+
+After completing the above steps, we need to enable an augmentation library called `albumentations`.
+This is achieved by running the previously downloaded image in interactive mode, so we can alter some files.
+
+### 1) Start the Docker container and make some changes
+
+To start the container, type
+
+```shell
+docker run --ipc=host -it --gpus all ultralytics/yolov5:latest  
+```
+
+You should be inside the docker container now. Now you have to manipulate some files:
+
+- First, use any text editor to
+  uncomment [line 38](https://github.com/ultralytics/yolov5/blob/master/requirements.txt#L38) inside
+  the  `requirements.txt`.
+  - Save and close the file afterwards.
+- Then use the same editor to
+  remove [lines 24-31](https://github.com/ultralytics/yolov5/blob/master/utils/augmentations.py#L24-L31)
+  from `utils/augmentations.py`.
+- Now paste the following in its place and save and close the file afterwards.
+
+```python
+T = [
+  A.Blur(p=0.4, blur_limit=(3, 20)),
+  A.ISONoise(p=0.4, intensity=(0.5, 2.0))]
+```
+
+Exit the container with
+
+```shell
+exit
+```
+
+### 2) Create an image from the altered container
+
+Run
+
+```shell
+docker ps -a
+```
+
+and look for your container. Use the `IMAGE` column to identify it.  
+With the container ID, use the following step to create the image.
+
+```shell
+docker commit [YOUR_CONTAINER_ID] ultralytics/yolov5:albumentations
+```
+
+</details>
 
 ### Train
 
-Having a terminal open in the repos root dir, type
+Having a terminal open inside the repos root dir, type
 
 ```shell
 src/train/run_yolo_docker.sh
@@ -94,10 +150,10 @@ The script `run_yolo_docker.sh` is by far not flexible. It's intended for use on
 
 When the training is finished, you'll find the results in `runs/train/`.
 
-#### Details
+#### Training Parameters Used
 
-| Stuff              | Value                                     |
-|--------------------|:------------------------------------------|
+| Parameter          | Value                                     |
+|--------------------|-------------------------------------------|
 | Epochs             | 300                                       |
 | Batch Size         | 64                                        |
 | Image Size         | 640                                       |
