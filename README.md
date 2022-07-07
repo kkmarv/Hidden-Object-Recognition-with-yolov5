@@ -35,7 +35,7 @@ With
 
 <details><summary>Optional Arguments</summary>
   <ul>
-    <li><code>--yolov5_path</code> If yolo isn't installed in the root dir, use this to point to yolo's root dir.<br></li>
+    <li><code>--yolov5_path</code> Use this to point to yolo's root dir.<br></li>
     <li><code>--weights_path</code> Use this to be able to change the weights which will be used for inference.</li>
   </ul>
 </details>
@@ -160,15 +160,3 @@ When the training is finished, you'll find the results in `runs/train/`.
 | Pretrained Weights | yolov5s.pt (use YOLOv5x in final version) |
 
 ## Evaluation
-
-# TODO
-
-- image augmentation
-    - blur
-    - skew colors
-    - rotation
-    - scaling
-- get the evaluation running
-- documentation
-    - inference
-    - training
