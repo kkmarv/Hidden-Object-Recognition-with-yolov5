@@ -1,6 +1,7 @@
 # Usage
 
 - [Inference](#inference)
+- [Evaluation](#evaluation)
 - [Training](#training)
 
 ## Inference
@@ -25,18 +26,17 @@ If you'd like to install or already have it installed elsewhere, see _Optional A
 First, open a terminal inside the repos root directory, then run
 
 ```shell
-python src/inference/predict.py input_path output_path
+python src/inference/predict.py input_path
 ```
 
-With
-
-- `input_path` being a path to a single image or a directory of images on which to infer on.
-- `output_path` being a directory in which the predictions will be saved.
+With `input_path` being a path to a single image or a directory of images on which to infer on.
 
 <details><summary>Optional Arguments</summary>
   <ul>
+    <li><code>--output_path</code> Specifies a directory in which the prediction images with visible bounding boxes will be saved. It won't be used if not specified.</li>
     <li><code>--yolov5_path</code> Use this to point to yolo's root dir.<br></li>
-    <li><code>--weights_path</code> Use this to be able to change the weights which will be used for inference.</li>
+    <li><code>--weights_path</code> Use this to change the weights which will be used for inference.</li>
+    <li><code>--team_name</code> Defaults to 'Tieeeeeeeeeeem'.</li>
   </ul>
 </details>
 
@@ -44,8 +44,11 @@ With
 
 The Inference will produce a `.csv` file for each image inside the `input_path` containing labels in yolov5 format. See
 below for a short description.  
-The file will be named after `image_name.Tieeeeeeem.csv`. For example, when inference is made on an image `x.png`, the
-resulting `.csv` file will be called `x.Tieeeeeeem.csv`.
+The file will be named after `image_name.team_name.csv`. For example, when inference is made on an image `x.png`, the
+resulting `.csv` file will be called `x.Tieeeeeeeeeeem.csv` since `team_name` defaults to 'Tieeeeeeeeeeem'.
+
+Additionally, if `--output_path` is specified, a directory containing images with visible bounding boxes will be
+created at the specified path.
 
 #### Format
 
@@ -72,16 +75,31 @@ resulting `.csv` file will be called `x.Tieeeeeeem.csv`.
 | 9        | Fussball      |
 | 10       | W20           |
 
+## Evaluation
+
+For evaluation, you'll need Prof. Hänig's [**Wimmelbild
+Generator**](https://gitlab.hs-anhalt.de/ki/lehre/modul-kuenstliche-intelligenz/praktikum-ss2022/wimmelbild-generator).
+
+Open a terminal inside the _Wimmelbild Generator_ root directory and run
+
+```shell
+python src/wimmelbild_generator/evaluation_cli.py input_path Tieeeeeeeeeeem
+```
+
+With `input_path` being the path to the same directory used when inferring.
+
+That's it.
+
 ## Training
 
 ### Prerequisites
 
 For this workflow to function as intended, you'll have to have Docker, the NVIDIA Container Toolkit, Nvidia Drivers
-installed and, you'll need a yolov5 Docker image.
+installed, and you'll need a yolov5 Docker image.
 Instructions for all this can be found [**here**](https://github.com/ultralytics/yolov5/wiki/Docker-Quickstart).
 
-These steps will suffice to give you a working yolov5 container, but to fully use our Augmentation Pipeline, you'll need
-a modified version of yolo's Docker image, which needs some manual manipulation. If you'd like to, you can:
+These steps will suffice to give you a working yolov5 image, but to fully use our Augmentation Pipeline, you'll need
+a modified version of this image, which needs some manual manipulation. If you'd like to, you can:
 
 <details><summary><b>Build the image yourself</b></summary>
 
@@ -152,11 +170,10 @@ When the training is finished, you'll find the results in `runs/train/`.
 
 #### Training Parameters Used
 
-| Parameter          | Value                                     |
-|--------------------|-------------------------------------------|
-| Epochs             | 300                                       |
-| Batch Size         | 64                                        |
-| Image Size         | 640                                       |
-| Pretrained Weights | yolov5s.pt (use YOLOv5x in final version) |
-
-## Evaluation
+| Parameter          | Value                                               |
+|--------------------|-----------------------------------------------------|
+| Epochs             | 300                                                 |
+| Batch Size         | 16 (8 per GPU)                                      |
+| Image Size         | 640                                                 |
+| Pretrained Weights | yolov5x.pt                                          |
+| Hyperparameter     | hyp.HiddenObject.yaml + Blur & ISO (Albumentations) |

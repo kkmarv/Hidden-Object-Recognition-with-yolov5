@@ -18,7 +18,7 @@ def convert_to_haenig(results_df: DataFrame) -> DataFrame:
         inplace=True
     )
 
-    # reassign label IDs from alphabetical to required order
+    # reassign label IDs from alphabetical to required order (robflow creates labels in alphabetical order)
     results_df.replace({
         'Object': {
             0: 2,  # Bagger -> 2
@@ -36,9 +36,6 @@ def convert_to_haenig(results_df: DataFrame) -> DataFrame:
 
 
 def main() -> None:
-    # load the model
-    model = torch.hub.load(yolov5_path, 'custom', source='local', path=weights_path)
-
     # find images
     images: list = []
     for root, _, files in os.walk(model_input_path):
@@ -46,8 +43,11 @@ def main() -> None:
             if is_valid_image_file(file):
                 images.append(os.path.join(root, file))
 
+    # load custom yolo model
+    model = torch.hub.load(yolov5_path, 'custom', source='local', path=weights_path)
+
     # do inference
-    results = model(images).pandas()  # or .show(), .save(), .crop(), .pandas(), etc
+    results = model(images).pandas()  # returns a Yolov5 Detections object
 
     # save resulting images
     if model_output_path:
@@ -64,10 +64,10 @@ def main() -> None:
 if __name__ == '__main__':
     from cli import ARGS
 
-    model_input_path = ARGS.input_path
-    model_output_path = ARGS.output_path
-    yolov5_path = ARGS.yolov5_path
-    weights_path = ARGS.weights_path
+    model_input_path = ARGS.input_path  # dir of images to infer on
+    model_output_path = ARGS.output_path  # optional dir for saving prediction images
+    yolov5_path = ARGS.yolov5_path  # path to yolo root dir
+    weights_path = ARGS.weights_path  # path to .pt file
     team_name = ARGS.team_name
 
     main()
