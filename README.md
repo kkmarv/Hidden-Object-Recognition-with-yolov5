@@ -50,35 +50,24 @@ resulting `.csv` file will be called `x.Tieeeeeeeeeeem.csv` since `team_name` de
 Additionally, if `--output_path` is specified, a directory containing images with visible bounding boxes will be
 created at the specified path.
 
-#### Format
+#### CSV Format
 
 | Parameter  | Description                                                 |
 |------------|-------------------------------------------------------------|
-| **Object** | [**Object ID**](#object-ids)                                |
+| **Object** | [**Class ID**](./model/README.md)                           |
 | **x**      | Center x-position of the label. Normalized to image width.  |
 | **y**      | Center y-position of the label. Normalized to image height. |
 | **w**      | Normalized label width.                                     |
 | **h**      | Normalized label height.                                    |
 
-#### Object IDs
-
-| ObjectId | ObjectType    |
-|----------|---------------|
-| 1        | Yoda          |
-| 2        | Bagger        |
-| 3        | Croissant     |
-| 4        | Banane        |
-| 5        | Brokkoli      |
-| 6        | Getraenkedose |
-| 7        | Leuchtturm    |
-| 8        | Waldo         |
-| 9        | Fussball      |
-| 10       | W20           |
-
 ## Evaluation
+
+### Prerequisites
 
 For evaluation, you'll need Prof. Hänig's [**Wimmelbild
 Generator**](https://gitlab.hs-anhalt.de/ki/lehre/modul-kuenstliche-intelligenz/praktikum-ss2022/wimmelbild-generator).
+
+### Evaluate
 
 Open a terminal inside the _Wimmelbild Generator_ root directory and run
 
@@ -159,12 +148,12 @@ docker commit [YOUR_CONTAINER_ID] ultralytics/yolov5:albumentations
 Having a terminal open inside the repos root dir, type
 
 ```shell
-src/train/run_yolo_docker.sh
+src/train/yolo_docker.sh
 ```
 
 which will automatically download the full training set from Roboflow, create a validation set from it and start the
 yolov5 Docker container to start training on 2 GPUs.  
-The script `run_yolo_docker.sh` is by far not flexible. It's intended for use on our own training machine only!
+The script `yolo_docker.sh` is by far not flexible. It's intended for use on our own training machine only!
 
 When the training is finished, you'll find the results in `runs/train/`.
 
