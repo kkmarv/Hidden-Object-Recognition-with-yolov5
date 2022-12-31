@@ -12,7 +12,7 @@ It is expected that yolov5 is installed on the same level as the repos root dir 
 If you'd like to install or already have it installed elsewhere, see _Optional Arguments_ in the next section.
 
 ```
-├── wimmelbilder-mit-yolov5
+├── hidden-object-recognition-with-yolov5
 │   ├── datasets
 │   ├── model
 │   ├── src
@@ -65,7 +65,7 @@ created at the specified path.
 ### Prerequisites
 
 For evaluation, you'll need Prof. Hänig's [**Wimmelbild
-Generator**](https://gitlab.hs-anhalt.de/ki/lehre/modul-kuenstliche-intelligenz/praktikum-ss2022/wimmelbild-generator).
+Generator**](https://gitlab.hs-anhalt.de/ki/lehre/modul-kuenstliche-intelligenz/praktikum-ss2022/wimmelbild-generator) ().
 
 ### Evaluate
 
